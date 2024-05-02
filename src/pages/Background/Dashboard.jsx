@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import {useNavigate} from 'react-router-dom';
 import {db} from "../../config/firebase";
-import {getDocs,collection,query, where} from "firebase/firestore";
+import {getDocs,collection,query, where,orderBy} from "firebase/firestore";
 import BackNav from "../../components/BackNav";
 
 
@@ -11,11 +11,11 @@ const Dashboard = () => {
   const apCollectionRef = collection(db,"Appointments");
   let q1;
   if(localStorage.getItem("type")=="1"){
-    q1=query(apCollectionRef, where("State","==","2"), where("Practitioner","==",localStorage.getItem("uid")));
+    q1=query(apCollectionRef, where("State","==","2"), where("Practitioner","==",localStorage.getItem("uid")),orderBy("Date"),orderBy("Slot"));
 
   }else{
     q1=query(apCollectionRef,where("Practice","==",localStorage.getItem("practice")), where("State","==","2"), 
-    where("Speciality","==",localStorage.getItem("speciality")));
+    where("Speciality","==",localStorage.getItem("speciality")),orderBy("Date"),orderBy("Slot"));
 
   }
   useEffect(() =>{
@@ -64,6 +64,7 @@ const Dashboard = () => {
                         <tr>
                           <th>Patient</th>
                           <th>Compliant</th>
+                          <th>Date</th>
                           {localStorage.getItem("type")=="1"?(<th>Options</th>):(<></>)}
                           
 
@@ -74,6 +75,7 @@ const Dashboard = () => {
                             <tr>
                             <td>{ap.PatientName}</td>
                             <td>{ap.Complaint}</td>
+                            <td>{ap.Date+" "+ap.Slot}</td>
                             {localStorage.getItem("type")=="1"?(<td><a href={"/StartAp/"+ap.id}>Start Appointment</a></td>):(<></>)}
                             </tr>
                           ))}             
