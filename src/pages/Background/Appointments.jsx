@@ -1,7 +1,7 @@
 import React, {useState,useEffect } from 'react'
 import {useParams} from 'react-router-dom';
 import {db} from "../../config/firebase";
-import {getDocs,collection,query, where, doc, updateDoc} from "firebase/firestore";
+import {getDocs, collection, query, where, doc, updateDoc, orderBy} from "firebase/firestore";
 import BackNav from "../../components/BackNav";
 
 const Appointments = () => {
@@ -11,10 +11,10 @@ const Appointments = () => {
     const apCollectionRef = collection(db,"Appointments");
     let q1;
     if(localStorage.getItem("type")=="1"){
-      q1=query(apCollectionRef, where("State","==",{id}.id), where("Practitioner","==",localStorage.getItem("uid")));
+      q1=query(apCollectionRef, where("State","==",{id}.id), where("Practitioner","==",localStorage.getItem("uid")),orderBy("Date"),orderBy("Slot"));
     }else{
       q1=query(apCollectionRef, where("State","==",{id}.id),where("Practice","==",localStorage.getItem("practice")), 
-    where("Speciality","==",localStorage.getItem("speciality")));
+    where("Speciality","==",localStorage.getItem("speciality")),orderBy("Date"),orderBy("Slot"));
 
     }
 
@@ -90,6 +90,7 @@ const Appointments = () => {
                                         <th>Patient</th>
                                         <th>Doctor</th>
                                         <th>Complaint</th>
+                                        <th>Date</th>
                                         <th>Options</th>
                                         </tr>
                                     </thead>
@@ -99,6 +100,7 @@ const Appointments = () => {
                                         <td>{ap.PatientName}</td>
                                         <td>{ap.PractitionerName}</td>
                                         <td>{ap.Complaint}</td>
+                                        <td>{ap.Date+" "+ap.Slot}</td>
                                         <td><a href={"/ApDetails/"+ap.id}>Details</a>
                                         {ap.State=="3"?
                                         (<span><button class="btn btn-default" style={{marginLeft:"10px"}} onClick={() => update(ap.id,"2")}>Accept</button>
