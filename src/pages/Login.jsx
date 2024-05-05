@@ -31,6 +31,7 @@ const Login = () => {
           const docSnap = await getDoc(docRef);
           localStorage.setItem("practiceRegistered",docSnap.data().PracticeRegistered);
           localStorage.setItem("patient",docSnap.data().Name);
+          localStorage.setItem("approval",docSnap.data().Approval);
           navigate("/Home");
 
         }else{

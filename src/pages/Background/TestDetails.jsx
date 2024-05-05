@@ -31,6 +31,9 @@ const TestDetails = () => {
         try{
         const docRef=doc(db,"Tests",{id}.id);
         await updateDoc(docRef,{State:"2", Result:result});
+        
+        const docPRef=doc(db,"Patients",test.Patient);
+        await updateDoc(docPRef,{NewTest:"1"});
         navigate("/Test/2")
 
         }catch(e){
@@ -80,8 +83,10 @@ const TestDetails = () => {
                                 <dl class="dl-horizontal">
                                     <dt>Test content</dt>
                                     <dd>{test.Content}</dd>
-                                    <dt>Create by</dt>
+                                    <dt>Created by</dt>
                                     <dd>{test.PractitionerName}</dd>
+                                    <dt>Created on</dt>
+                                    <dd>{test.Date}</dd>
                                     <dt>Patient</dt>
                                     <dd>{test.PatientName}</dd>
                                 </dl>

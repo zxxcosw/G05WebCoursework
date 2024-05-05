@@ -1,5 +1,4 @@
 import './App.css';
-import "./style.scss";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -17,6 +16,13 @@ import Welcome from "./pages/Welcome";
 import Admin from "./pages/Background/Admin";
 import CreateAccount from './pages/Background/CreateAccount';
 import TestDetails from './pages/Background/TestDetails';
+import FillMedicalHistory from './pages/FillMedicalHistory';
+import CreateAp from './pages/CreateAp';
+import UpdateMH from './pages/Background/UpdateMH';
+import MyAppointments from './pages/MyAppointments';
+import MyApDetails from './pages/MyApDetails';
+import MyTests from './pages/MyTests';
+import PatientInfo from './pages/PatientInfo';
 
 const router = createBrowserRouter([
 
@@ -76,7 +82,37 @@ const router = createBrowserRouter([
   {
     path:'/TestDetails/:id',
     element:<TestDetails/>
+  },
+  {
+    path:'/FillMedicalHistory',
+    element:<FillMedicalHistory/>
+  },
+  {
+    path:'/CreateAp',
+    element:<CreateAp/>
+  },
+  {
+    path:"/UpdateMH/:id",
+    element:<UpdateMH/>
+  },
+  {
+    path:"/MyAppointments/:id",
+    element:<MyAppointments/>
+  },
+  {
+    path:"/MyApDetails/:id",
+    element:<MyApDetails/>
+  },
+  {
+    path:"/MyTests/:id",
+    element:<MyTests/>
+
+  },
+  {
+    path:"/PatientInfo",
+    element:<PatientInfo/>
   }
+
 
 
 ])

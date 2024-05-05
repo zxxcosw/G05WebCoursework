@@ -2,7 +2,7 @@ import BackNav from "../../components/BackNav";
 import {useParams} from 'react-router-dom';
 import {db} from "../../config/firebase";
 import React, {useState,useEffect } from 'react';
-import {getDocs,collection,query, where, doc, updateDoc} from "firebase/firestore";
+import {getDocs,collection,query, where, doc, updateDoc,orderBy} from "firebase/firestore";
 
 const Test = () => {
     let {id}=useParams();
@@ -10,10 +10,10 @@ const Test = () => {
     const CollectionRef = collection(db,"Tests");
     let q;
     if(localStorage.getItem("type")=="1"){
-      q=query(CollectionRef, where("State","==",{id}.id), where("Practitioner","==",localStorage.getItem("uid")));
+      q=query(CollectionRef, where("State","==",{id}.id), where("Practitioner","==",localStorage.getItem("uid")),orderBy("Date"));
     }else{
       q=query(CollectionRef, where("State","==",{id}.id),where("Practice","==",localStorage.getItem("practice")), 
-    where("Speciality","==",localStorage.getItem("speciality")));
+    where("Speciality","==",localStorage.getItem("speciality")),orderBy("Date"));
 
     }
 
@@ -106,10 +106,10 @@ const Test = () => {
                                         <tr>
                                         <th>Test Content</th>
                                         <th>Patient</th>
-                                        <th>Create by</th>
-                                        {{id}.id=="2"?(<th>Result</th>):(<th>options</th>)}
-                                        
-                                        
+                                        <th>Created by</th>
+                                        <th>Created on </th>
+                                        {{id}.id=="2"?(<th>Result</th>):(<th>Options</th>)}
+                                                                               
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -118,6 +118,7 @@ const Test = () => {
                                         <td>{t.Content}</td>
                                         <td>{t.PatientName}</td>
                                         <td>{t.PractitionerName}</td>
+                                        <td>{t.Date}</td>
                                         {{id}.id=="2"?(<td>{t.Result}</td>):
                                         (<>{{id}.id=="1"?(
                                         <td>

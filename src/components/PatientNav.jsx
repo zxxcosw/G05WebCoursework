@@ -10,6 +10,8 @@ const PatientNav = ()=>{
             localStorage.removeItem("Patient");
             localStorage.removeItem("practiceRegistered");
             localStorage.removeItem("pid");
+            localStorage.removeItem("approval");
+
             navigate("/Login/1");
             
     
@@ -29,11 +31,11 @@ const PatientNav = ()=>{
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <h class="navbar-brand">{localStorage.getItem("practiceRegistered")}</h>
+                <h class="navbar-brand">Health Network</h>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"> {localStorage.getItem("patient")}</a></li>
+                    <li>{localStorage.getItem("patient")}</li>
                     <li><a onClick={logout}>Logout</a></li>
                 </ul>
   

@@ -1,10 +1,10 @@
 import React from 'react'
 import {useParams,useNavigate} from 'react-router-dom';
-import {getDoc,doc,updateDoc,setDoc,getDocs,collection,query, where,addDoc} from "firebase/firestore";
+import {getDoc,doc,updateDoc,setDoc,getDocs,collection,query, where,addDoc, orderBy} from "firebase/firestore";
 import{db} from "../../config/firebase"
 import {useState,useEffect} from 'react';
 import BackNav from "../../components/BackNav";
-import Appointments from './Appointments';
+import moment from 'moment';
 
 const StartAp = () => {
 
@@ -43,7 +43,7 @@ const StartAp = () => {
       try{
         await addDoc(collection(db,"Tests"),{Appointment:{id}.id, Content:test, Patient:ap.ap.Patient, PatientName:ap.ap.PatientName,
       Practice:ap.ap.Practice, Practitioner:localStorage.getItem("uid"),Speciality:ap.ap.Speciality, PractitionerName:localStorage.getItem("isLogin"),
-    Result:"0",State:"0"});
+    Result:"0",State:"0", Date:moment().format('YYYY-MM-DD')});
       setNewTest(test);
 
       }catch(e){
@@ -111,6 +111,8 @@ const StartAp = () => {
                                     <dt>Complaint</dt>
                                     <dd>{ap.ap.Complaint}</dd>  
                                 </dl>
+
+                                <a class="btn btn-default" href={"/UpdateMH/"+{id}.id}>Update Medical History</a>
                                 </div>
                             </div>
 

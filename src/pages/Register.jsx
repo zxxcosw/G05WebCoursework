@@ -48,8 +48,12 @@ const Register = () => {
         try{
         await createUserWithEmailAndPassword(auth,inputs.email, inputs.password);
         await setDoc(doc(db,"Patients",auth.currentUser.uid),{Email:inputs.email, MedicalHistory:[], Name:inputs.name, 
-            PracticeRegistered:inputs.practice, Approval:"0", Birth:inputs.birth, Address:inputs.address});
-        navigate("/Login/1");
+            PracticeRegistered:inputs.practice, Approval:"0", Birth:inputs.birth, Address:inputs.address, NewTest:"0"});
+        localStorage.setItem("pid",auth.currentUser.uid);
+        localStorage.setItem("practiceRegistered",inputs.practice);
+        localStorage.setItem("patient",inputs.name);
+        localStorage.setItem("approval","0");
+        navigate("/FillMedicalHistory");
         
         }catch(err){
             console.error(err);
@@ -75,7 +79,7 @@ const Register = () => {
             <div class="form-group">
             <label for="inputBirth" class="col-sm-2 control-label">Date of birth</label>
             <div class="col-sm-10">
-            <input class="form-control" placeholder="Date of birth" name="birth" onChange={handleChange}/>
+            <input class="form-control" placeholder="dd/mm/yyyy" name="birth" onChange={handleChange}/>
             </div>
             </div>
 
