@@ -15,6 +15,8 @@ const ApDetails = () => {
     const [Doctors, setDoctors]=useState([]);
     const [tests, setTests]=useState([]);
     const navigate = useNavigate();
+
+    const [wrong,setWrong]=useState("hidden");
   
     useEffect(() =>{
         const getAp = async () =>{
@@ -93,11 +95,19 @@ const ApDetails = () => {
     };
 
     const alter = async () => {
+      try{
       const docRef=doc(db,"Appointments",{id}.id);
       const PdocRef=doc(db,"Practitioners",inputs.doctor);
       const docSnap = await getDoc(PdocRef);
       await updateDoc(docRef,{Practice:inputs.practice, Speciality:inputs.speciality, Practitioner:inputs.doctor, PractitionerName:docSnap.data().Name});
       navigate("/Appointments/3");
+      }
+      catch(e){
+        console.error(e);
+        setWrong("visible");
+
+      }
+
     }
 
 
@@ -188,6 +198,12 @@ const ApDetails = () => {
                             <div class="form-group">
                             <div class="col-md-offset-1 col-sm-9">
                             <button onClick={alter}>Speciality refer</button>
+                            </div>
+                            </div>
+
+                            <div class="form-group">
+                            <div class="col-md-offset-1 col-sm-9">
+                            <div class="alert alert-danger" role="alert" style={{visibility:wrong}}>All inputs should not be null!</div>
                             </div>
                             </div>
 

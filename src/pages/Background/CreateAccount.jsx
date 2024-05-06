@@ -11,6 +11,7 @@ const CreateAccount=()=>{
     
     const pCollectionRef = collection(db,"Practitioners");
     const q=query(pCollectionRef,where("Practice","==",localStorage.getItem("practice")),orderBy("Type"));
+    const [wrong,setWrong] = useState("hidden");
 
     useEffect(() =>{
         const getpList = async () =>{
@@ -44,20 +45,26 @@ const CreateAccount=()=>{
     
     const Regist= async () =>{
         try{
-        await createUserWithEmailAndPassword(auth,inputs.email, inputs.password);
-        let type;
-        if(inputs.type=="Doctor"){
-            type="1"
-        }
-        else{
-            type="2"
-        }
-        await setDoc(doc(db,"Practitioners",auth.currentUser.uid),{Email:inputs.email, Name:inputs.name, 
-            Practice:localStorage.getItem("practice"),Speciality:inputs.speciality, Type:type});
-        window.location.reload();
+           if(inputs.speciality!=""&&inputs.type!=""&&inputs.name!=""){
+                await createUserWithEmailAndPassword(auth,inputs.email, inputs.password);
+                let type;
+                if(inputs.type=="Doctor"){
+                    type="1"
+                }
+             else{
+                    type="2"
+                }
+                await setDoc(doc(db,"Practitioners",auth.currentUser.uid),{Email:inputs.email, Name:inputs.name, 
+                Practice:localStorage.getItem("practice"),Speciality:inputs.speciality, Type:type});
+                window.location.reload();            
+           }else{
+            setWrong("visible");
+           }
+
         
         }catch(err){
             console.error(err);
+            setWrong("visible");
         }
 
 
@@ -138,6 +145,12 @@ const CreateAccount=()=>{
                             <div class="form-group">
                             <div class="col-md-offset-1 col-sm-9">
                             <button onClick={Regist}>Create account</button>
+                            </div>
+                            </div>
+
+                            <div class="form-group">
+                            <div class="col-md-offset-1 col-sm-9">
+                            <div class="alert alert-danger" role="alert" style={{visibility:wrong}}>All inputs should not be null!</div>
                             </div>
                             </div>
 

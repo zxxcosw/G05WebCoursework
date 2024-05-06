@@ -10,6 +10,7 @@ import { doc, setDoc, getDocs,collection} from "firebase/firestore";
 const Register = () => {
     const [practices, setPractices] = useState([]);
     const pCollectionRef = collection(db,"Practices");
+    const [wrong,setWrong]=useState("hidden");
 
     useEffect(() =>{
         const getpList = async () =>{
@@ -44,7 +45,7 @@ const Register = () => {
       const navigate = useNavigate();
 
     const Regist= async () =>{
-        if(inputs.conPassword==inputs.password){
+        if(inputs.conPassword==inputs.password&&inputs.practice!=""){
         try{
         await createUserWithEmailAndPassword(auth,inputs.email, inputs.password);
         await setDoc(doc(db,"Patients",auth.currentUser.uid),{Email:inputs.email, MedicalHistory:[], Name:inputs.name, 
@@ -56,10 +57,12 @@ const Register = () => {
         navigate("/FillMedicalHistory");
         
         }catch(err){
+            setWrong("visible")
             console.error(err);
         }
         }else{
-            console.log("Password not the same.")
+            console.log("Password not the same.");
+            setWrong("visible");
 
         }
 
@@ -131,6 +134,13 @@ const Register = () => {
             <Link to="/Login">Already have an account? Login here</Link>
             </div>
             </div>
+
+            <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+            <div class="alert alert-danger" role="alert" style={{visibility:wrong}}>All inputs should not be null! Confirm your password again!</div>
+            </div>
+            </div>
+
             </div>
         </div>
     );

@@ -13,6 +13,8 @@ const Login = () => {
         password: ""
         
       });
+    const [visible,setVisible]=useState("hidden");
+    const [wrong,setWrong]=useState("hidden");
 
 
       const handleChange = (e) => {
@@ -22,7 +24,9 @@ const Login = () => {
       const navigate = useNavigate();
 
       const login= async () =>{
+
         try{
+        if(inputs.email!=""&&inputs.password!=""){
         await signInWithEmailAndPassword (auth,inputs.email, inputs.password);
 
         if({id}.id==1){
@@ -49,10 +53,18 @@ const Login = () => {
           navigate("/Dashboard");
         }
         
-        }
+        }            
+          }
+        else{
+          setVisible("visible")
+
+          }
+
 
         }catch(err){
             console.error(err);
+            localStorage.clear();
+            setWrong("visible")
         }
     };
 
@@ -68,6 +80,8 @@ const Login = () => {
           <input class="form-control" placeholder="Password..." name="password" onChange={handleChange}/>          
           <button style={{marginTop:"10px"}} class="btn btn-lg btn-primary btn-block" onClick={login}>Login</button>
           {{id}.id==1 ?(<Link to="/Register">Register for an account</Link>):(<></>)}
+          <div class="alert alert-danger" role="alert" style={{visibility:visible}}>All inputs should not be null!</div>
+          <div class="alert alert-danger" role="alert" style={{visibility:wrong}}>Wrong email or password!</div>
           </div>
           
         </div>

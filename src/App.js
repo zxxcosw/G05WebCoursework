@@ -24,6 +24,7 @@ import MyApDetails from './pages/MyApDetails';
 import MyTests from './pages/MyTests';
 import PatientInfo from './pages/PatientInfo';
 
+
 const router = createBrowserRouter([
 
   {
@@ -112,7 +113,6 @@ const router = createBrowserRouter([
     path:"/PatientInfo",
     element:<PatientInfo/>
   }
-
 
 
 ])

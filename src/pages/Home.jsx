@@ -10,6 +10,7 @@ const Home = () => {
 
     const [practices,setPractices]=useState([]);
     const [practice,setPractice]=useState();
+    const [thisP,setThisP]=useState({Specialities:[]});
 
     const [patient,setPatient]=useState({
         Name:"",
@@ -28,8 +29,13 @@ const Home = () => {
             const docRef=doc(db,"Patients",localStorage.getItem("pid"));
             const docSnap = await getDoc(docRef);
 
+            const docPRef=doc(db, "Practices", localStorage.getItem("practiceRegistered"));
+            const docPSnap=await getDoc(docPRef);
+
             setPractices(filteredData);
             setPatient(docSnap.data());
+            setThisP(docPSnap.data());
+            
             
           } catch(err){
             console.error(err);
@@ -49,7 +55,7 @@ const Home = () => {
 
     const handleChange = (e) => {
         setPatient((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-        console.log(patient);
+        
       };
   
       const update=async()=>{
@@ -123,7 +129,32 @@ const Home = () => {
             content=(
             <div>
                 <ApprovedPatientNav/>
-                <p class="text-center"><a href="/CreateAp">Booking appointment</a></p>
+                <div class="row">
+                <div class="col-sm-10 col-md-offset-1  main">
+
+                <div class="jumbotron">
+                <h1 style={{paddingLeft:"50px"}}>Hello, {localStorage.getItem("patient")}!</h1>
+                <p style={{paddingLeft:"50px"}}>Your registered practice is {localStorage.getItem("practiceRegistered")}. You can book appointment in this practice!</p>
+                <p style={{paddingLeft:"50px"}}><a class="btn btn-primary btn-lg" href="/CreateAp" role="button">Book appointment</a></p>
+                </div>
+
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Specialities</h3>
+                </div>
+                <div class="panel-body">
+                <ul class="list-group">
+                  {thisP.Specialities.map((s) =>(
+                    <li class="list-group-item">{s}</li>
+                  ))}
+                </ul>
+                 
+                </div>
+                </div>
+
+                </div>
+                </div>
+                
 
 
             </div>)
