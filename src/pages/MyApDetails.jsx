@@ -48,6 +48,7 @@ const MyApDetails = () => {
         content=(
         <div>
             <ApprovedPatientNav/>
+            <span style={{width:"200px", display: "inline-block"}}></span>
             <div class="container-fluid">
                 <div class="row">
 

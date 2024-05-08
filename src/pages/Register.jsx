@@ -131,7 +131,7 @@ const Register = () => {
 
             <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-            <Link to="/Login">Already have an account? Login here</Link>
+            <Link to="/Login/1">Already have an account? Login here</Link>
             </div>
             </div>
 
