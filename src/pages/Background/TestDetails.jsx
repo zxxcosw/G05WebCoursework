@@ -68,13 +68,14 @@ const TestDetails = () => {
                       (<>
                           <li><a href="/Dashboard">Dashboard </a></li>
                           <li><a href="/Appointments/3">Appointments</a></li>
-                          <li><a href="/Test/0">Tests</a></li>
+                          <li class="active"><a href="/Test/0">Tests<span class="sr-only">(current)</span></a></li>
                       </>)}
                       </ul>
                       </div>
 
                       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                           <ol class="breadcrumb">
+                            <li><a href="/Test/1">Tests</a></li>
                               <li class="active">Test details</li>
                           </ol>
 

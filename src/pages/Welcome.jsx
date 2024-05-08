@@ -40,6 +40,8 @@ const Welcome=()=>{
                     Patients can register to a practice for appointment booking. Practitioners can login to this system for services data management.
                     With this platform, practitioners can conduct specialist referrals with other health practice conveniently. This platform also ensure the data safefy.
                     We confirm that the privacy data will be well protected. </p>
+                    <span style={{height:"130px", display: "inline-block"}}></span>
+                    
 
 				</div>
 			</div>
